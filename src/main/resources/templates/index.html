@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{index.title}">Accueil</title>
+    <!-- Header Insertion, contains bootstrap links -->
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+<body>
+
+<!-- Menu insertion -->
+<div th:insert="~{common/menu :: menu}"></div>
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+            <div class="card-body">
+                <h1 th:text="#{index.welcome}">BIG BILL HELL'S CAR LOT.</h1>  
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <article class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th th:text="#{index.totalContract}">Contract total</th>
+                    <th th:text="#{index.totalClient}">Client total</th>
+                    <th th:text="#{index.totalCar}">Car Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th th:text="${totalContract}">Contract total</th>
+                    <th th:text="${totalClient}">Client total</th>
+                    <th th:text="${totalCar}">Car Total</th>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+    
+   <!-- <article class="table-responsive" th:unless="${contracts.isEmpty()}">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th th:text="#{contract.id}">Id</th>
+                    <th th:text="#{contract.immatriculation}">Immatriculation</th>
+                    <th th:text="#{contract.clientId}">ID Client</th>
+                    <th th:text="#{contract.startingDate}">Date de debut</th>
+                    <th th:text="#{contract.endingDate}">Date de fin</th>
+                    <th th:text="#{contract.totalPrice}">Prix Total</th>
+                    <th th:text="#{contract.progress}">Progres</th>
+                    <th th:text="#{actions}">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="contract : ${contracts}">
+                    <td th:text="${contract.id}">Id</td>
+                    <td th:text="${contract.immatriculation}">Immatriculation</td>
+                    <td th:text="${contract.clientId}">ID Client</td>
+                    <td th:text="${contract.startingDate}">Date de debut</td>
+                    <td th:text="${contract.endingDate}">Date de fin</td>
+                    <td th:text="${contract.totalPrice}">Prix Total</td>
+                    <td th:text="${contract.progress}">Progres</td>
+                    <td >
+                            <a th:href="@{/contract/edit/{id}(id=${contract.id})}"
+                                class="btn btn-info btn-sm" th:text="#{edit}">Modifier</a>
+                            <a th:href="@{/contract/delete/{id}(id=${contract.id})}"
+                                class="btn btn-danger btn-sm" th:text="#{delete}"
+                                onclick="return confirm('Supprimer ce produit ?');">Supprimer
+                            </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </article> -->
+</main>
+
+</body>
+</html>

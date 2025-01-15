@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Change title if add or edit -->
+    <title th:text="${!isEditMode} ? #{client.form.add} :  #{client.form.edit}"></title>
+    <!-- insertion of header, contains bootstrap link -->
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+    <!-- insertion of menu navigation -->
+    <div th:insert="~{common/menu :: menu}"></div>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <article class="card shadow">
+                    <!-- Change title if add or edit -->
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0" th:text="${!isEditMode} ? #{client.form.add} : #{client.form.edit}">
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/client/save}" th:object="${client}" method="post" class="needs-validation">
+
+                            <!-- client id -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.id}">Id :</label>
+                                <input type="text" class="form-control" th:field="*{id}" th:readonly="${isEditMode}"
+                                    th:classappend="${#fields.hasErrors('id')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- client Nom -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.nom}">Nom :</label>
+                                <input type="text" class="form-control" th:field="*{nom}"
+                                    th:classappend="${#fields.hasErrors('nom')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}">
+                                    Erreur
+                                </div>
+                            </div>
+
+                            <!-- client Prenom -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.prenom}">Prenom :</label>
+                                <input type="text" class="form-control" th:field="*{prenom}"
+                                    th:classappend="${#fields.hasErrors('prenom')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('prenom')}"
+                                    th:errors="*{prenom}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- client Mail -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.mail}">Mail :</label>
+                                <input type="text" class="form-control" th:field="*{mail}"
+                                    th:classappend="${#fields.hasErrors('mail')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- client License -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.license}">Permis de conduire :</label>
+                                <input type="text" class="form-control" th:field="*{license}"
+                                    th:classappend="${#fields.hasErrors('license')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('license')}"
+                                    th:errors="*{license}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- client Birthdate -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.birthdate}">Date de naissance :</label>
+                                <input type="date" class="form-control" th:field="*{birthDate}"
+                                    th:classappend="${#fields.hasErrors('birthDate')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('birthDate')}"
+                                    th:errors="*{birthDate}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- client Gender -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.gender}">Gender :</label>
+                                <select class="form-select" th:field="*{gender}"
+                                    th:classappend="${#fields.hasErrors('gender')} ? 'is-invalid'">
+                                    <option value="man" th:text="#{man}">Homme</option>
+                                    <option value="woman" th:text="#{woman}">Femme</option>
+                                    <option value="other" th:text="#{other}">Autres</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}"
+                                    th:errors="*{gender}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- client availability -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{client.block}">Bloque :</label>
+                                <input type="checkbox" th:field="*{blocked}"
+                                    th:classappend="${#fields.hasErrors('Blocked')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('Blocked')}"
+                                    th:errors="*{Blocked}">Erreur</div>
+                            </div>
+
+                            <!-- Form buttons -->
+                            <div class="d-flex justify-content-end gap-2 mt-4">
+                                <a href="/client/list" class="btn btn-secondary" th:text="#{cancel}">Annuler</a>
+                                <button type="submit" class="btn btn-primary" th:text="#{save}">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{client.list.title}">Liste des clients</title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+    <div th:insert="~{common/menu :: menu}"></div>
+
+    <main class="container py-5">
+        
+        <!-- Add Button & Title -->
+        <div class="row mb-4">
+            <div class="col">
+                <div>
+                    <h1 class="h2 mb-0" th:text="#{client.list.title}">Liste des clients</h1>
+                    <a th:href="@{/client/add}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2" th:text="#{add}">Ajouter</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State Message -->
+        <article th:if="${clients.isEmpty()}" class="text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <p class="h4 mt-3 text-muted" th:text="#{client.list.empty}">Aucun client enregistré.</p>
+        </article>
+
+        <!-- List -->
+        <article class="table-responsive" th:unless="${clients.isEmpty()}">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th th:text="#{client.id}">Id</th>
+                        <th th:text="#{client.nom}">Nom</th>
+                        <th th:text="#{client.prenom}">Prenom</th>
+                        <th th:text="#{client.mail}">Mail</th>
+                        <th th:text="#{client.license}">Permis de conduire</th>
+                        <th th:text="#{client.birthdate}">Date de Naissance</th>
+                        <th th:text="#{client.gender}">Genre</th>
+                        <th th:text="#{client.block}">Bloqué</th>
+                        <th th:text="#{actions}">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="client : ${clients}">
+                        <td th:text="${client.id}">Id</td>
+                        <td th:text="${client.nom}">Nom</td>
+                        <td th:text="${client.prenom}">Prenom</td>
+                        <td th:text="${client.mail}">Mail</td>
+                        <td th:text="${client.license}">Permis de conduire</td>
+                        <td th:text="${#temporals.format(client.birthDate, 'dd/MM/yyyy')}">Date de naissance</td>
+                        <td th:text="${client.gender}">Genre</td>
+                        <td th:text="${client.blocked} ? #{client.blockTrue} : #{client.blockFalse}">Blocked</td>
+                        <td >
+                                <a th:href="@{/client/edit/{id}(id=${client.id})}"
+                                    class="btn btn-info btn-sm" th:text="#{edit}">Modifier</a>
+                                <a th:href="@{/client/delete/{id}(id=${client.id})}"
+                                    class="btn btn-danger btn-sm" th:text="#{delete}"
+                                    onclick="return confirm('Supprimer ce produit ?');">Supprimer
+                                </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{car.list.title}">Liste des voitures</title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+    <div th:insert="~{common/menu :: menu}"></div>
+
+    <main class="container py-5">
+        
+        <!-- Add Button & Title -->
+        <div class="row mb-4">
+            <div class="col">
+                <div>
+                    <h1 class="h2 mb-0" th:text="#{car.list.title}">Liste des voitures</h1>
+                    <a th:href="@{/car/add}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2" th:text="#{add}">Ajouter</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State Message -->
+        <article th:if="${cars.isEmpty()}" class="text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <p class="h4 mt-3 text-muted" th:text="#{car.list.empty}">Aucune voiture enregistré.</p>
+        </article>
+
+        <!-- List -->
+        <article class="table-responsive" th:unless="${cars.isEmpty()}">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th th:text="#{car.immatriculation}">Immatriculation</th>
+                        <th th:text="#{car.model}">Model</th>
+                        <th th:text="#{car.marque}">Marque</th>
+                        <th th:text="#{car.category}">Categorie</th>
+                        <th th:text="#{car.available}">Disponibilité</th>
+                        <th th:text="#{actions}">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="car : ${cars}">
+                        <td th:text="${car.immatriculation}">Immatriculation</td>
+                        <td th:text="${car.model}">Model</td>
+                        <td th:text="${car.marque}">Marque</td>
+                        <td th:text="${car.category}">Category</td>
+                        <td th:text="${car.available} ? #{car.availableTrue} : #{car.availableFalse}">Disponibilité</td>
+                        <td >
+                                <a th:href="@{/car/edit/{immatriculation}(immatriculation=${car.immatriculation})}"
+                                    class="btn btn-info btn-sm" th:text="#{edit}">Modifier</a>
+                                <a th:href="@{/car/delete/{immatriculation}(immatriculation=${car.immatriculation})}"
+                                    class="btn btn-danger btn-sm" th:text="#{delete}"
+                                    onclick="return confirm('Supprimer ce produit ?');">Supprimer
+                                </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+    </main>
+</body>
+
+</html>

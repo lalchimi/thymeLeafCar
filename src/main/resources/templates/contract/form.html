@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Change title if add or edit -->
+    <title th:text="${!isEditMode} ? #{contract.form.add} :  #{contract.form.edit}"></title>
+    <!-- insertion of header, contains bootstrap link -->
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+    <!-- insertion of menu navigation -->
+    <div th:insert="~{common/menu :: menu}"></div>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <article class="card shadow">
+                    <!-- Change title if add or edit -->
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0"
+                            th:text="${!isEditMode} ? #{contract.form.add} : #{contract.form.edit}">
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/contract/save}" th:object="${contract}" method="post"
+                            class="needs-validation">
+
+                            <!-- contract id -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.id}">Id :</label>
+                                <input type="number" class="form-control" th:field="*{id}" th:readonly="${isEditMode}"
+                                    th:classappend="${#fields.hasErrors('id')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- contract Immatriculation -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.immatriculation}">Immatriculation
+                                    :</label>
+                                <select class="form-select" th:field="*{immatriculation}"
+                                    th:classappend="${#fields.hasErrors('immatriculation')} ? 'is-invalid'">
+                                    <option th:each="car : ${cars}" th:value="${car.immatriculation}"
+                                        th:text="${car.immatriculation}"
+                                        th:selected="${car.immatriculation == contract.immatriculation}">
+                                    </option>
+                                </select>
+                                <input type="hidden" th:field="*{immatriculation}" th:if="${isEditMode}" />
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('immatriculation')}"
+                                    th:errors="*{immatriculation}">Erreur</div>
+                            </div>
+
+                            <!-- contract ID Client -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.clientId}">ID Client :</label>
+                                <select class="form-select" th:field="*{clientId}" 
+                                    th:classappend="${#fields.hasErrors('clientId')} ? 'is-invalid'">
+                                    <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.id}"
+                                        th:selected="${client.id == contract.clientId}">
+                                    </option>
+                                </select>
+                                <input type="hidden" th:field="*{clientId}" th:if="${isEditMode}" />
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('clientId')}"
+                                    th:errors="*{clientId}">Erreur</div>
+                            </div>
+
+                            <!-- contract Starting Date -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.startingDate}">Date de debut :</label>
+                                <input type="date" class="form-control" th:field="*{startingDate}"
+                                    th:classappend="${#fields.hasErrors('startingDate')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('startingDate')}"
+                                    th:errors="*{startingDate}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- contract Ending Date -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.endingDate}">Date de fin :</label>
+                                <input type="date" class="form-control" th:field="*{endingDate}"
+                                    th:classappend="${#fields.hasErrors('endingDate')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('endingDate')}"
+                                    th:errors="*{endingDate}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- contract Total price -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.totalPrice}">Prix total :</label>
+                                <input type="number" class="form-control" th:field="*{totalPrice}"
+                                    th:classappend="${#fields.hasErrors('totalPrice')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('totalPrice')}"
+                                    th:errors="*{totalPrice}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- contract Progress -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{contract.progress}">Progress :</label>
+                                <input type="checkbox" th:field="*{progress}"
+                                    th:classappend="${#fields.hasErrors('progress')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('progress')}"
+                                    th:errors="*{progress}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- Form buttons -->
+                            <div class="d-flex justify-content-end gap-2 mt-4">
+                                <a href="/contract/list" class="btn btn-secondary" th:text="#{cancel}">Annuler</a>
+                                <button type="submit" class="btn btn-primary" th:text="#{save}">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Change title if add or edit -->
+    <title th:text="${!isEditMode} ? #{car.form.add} :  #{car.form.edit}"></title>
+    <!-- insertion of header, contains bootstrap link -->
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+    <!-- insertion of menu navigation -->
+    <div th:insert="~{common/menu :: menu}"></div>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <article class="card shadow">
+                    <!-- Change title if add or edit -->
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0" th:text="${!isEditMode} ? #{car.form.add} : #{car.form.edit}">
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/car/save}" th:object="${car}" method="post" class="needs-validation">
+
+                            <!-- Car immatriculation -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{car.immatriculation}">Immatriculation :</label>
+                                <input type="text" class="form-control" th:field="*{immatriculation}"
+                                    th:readonly="${isEditMode}"
+                                    th:classappend="${#fields.hasErrors('immatriculation')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('immatriculation')}"
+                                    th:errors="*{immatriculation}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- Car Model -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{car.model}">Model :</label>
+                                <input type="text" class="form-control" th:field="*{model}"
+                                    th:classappend="${#fields.hasErrors('model')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('model')}"
+                                    th:errors="*{model}">Erreur</div>
+                            </div>
+
+                            <!-- Car Marque -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{car.marque}">Marque :</label>
+                                <input type="text" class="form-control" th:field="*{marque}"
+                                    th:classappend="${#fields.hasErrors('marque')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('marque')}"
+                                    th:errors="*{marque}">
+                                    Erreur</div>
+                            </div>
+
+                            <!-- Car Category -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{car.category}">Catégorie :</label>
+                                <select class="form-select" th:field="*{category}"
+                                    th:classappend="${#fields.hasErrors('category')} ? 'is-invalid'">
+                                    <option value="berline" th:text="#{car.berline}">Berline</option>
+                                    <option value="SUV" th:text="#{car.SUV}">SUV</option>
+                                    <option value="etc" th:text="#{car.etc}">etc.</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('category')}"
+                                    th:errors="*{category}">Erreur</div>
+                            </div>
+
+                            <!-- Car availability -->
+                            <div class="mb-3">
+                                <label class="form-label" th:text="#{car.available}">Disponibilité :</label>
+                                <input type="checkbox" th:field="*{available}"
+                                    th:classappend="${#fields.hasErrors('available')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('available')}"
+                                    th:errors="*{available}">Erreur</div>
+                            </div>
+
+                            <!-- Form buttons -->
+                            <div class="d-flex justify-content-end gap-2 mt-4">
+                                <a href="/car/list" class="btn btn-secondary" th:text="#{cancel}">Annuler</a>
+                                <button type="submit" class="btn btn-primary" th:text="#{save}">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
