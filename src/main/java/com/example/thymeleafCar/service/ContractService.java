@@ -44,4 +44,21 @@ public class ContractService {
     public void deleteById(Long id) {
         contractList.removeIf(p -> p.getId().equals(id));
     }
+    
+	public List<Contract> GetExpiringContract(List<Contract> contracts) {
+		
+		List<Contract> returningList = new ArrayList<>();
+		LocalDate today = LocalDate.now();
+	
+		if(!contracts.isEmpty()) {
+			for (Contract contract : contracts) {
+				LocalDate expiringDate = contract.getEndingDate().minusMonths(3L);
+				if(expiringDate.isBefore(today)) {
+					returningList.add(contract);
+				}
+			}
+		}
+		
+		return returningList;
+	}
 }

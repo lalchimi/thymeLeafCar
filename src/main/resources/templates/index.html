@@ -39,7 +39,7 @@
         </table>
     </article>
     
-   <!-- <article class="table-responsive" th:unless="${contracts.isEmpty()}">
+   <article class="table-responsive" th:unless="${contracts.isEmpty()}">
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
                 <tr>
@@ -54,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="contract : ${contracts}">
+                <tr th:each="contract : ${expiredContracts}">
                     <td th:text="${contract.id}">Id</td>
                     <td th:text="${contract.immatriculation}">Immatriculation</td>
                     <td th:text="${contract.clientId}">ID Client</td>
